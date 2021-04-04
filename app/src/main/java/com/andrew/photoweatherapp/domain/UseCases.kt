@@ -13,7 +13,7 @@ object BadLocationState : WeatherDataState()
 data class ErrorState(val message: String?) : WeatherDataState()
 data class DataState(val data: WeatherData) : WeatherDataState()
 
-class GetWeatherByCityUseCase(
+class GetWeatherDataCase(
     private val repository: WeatherDataRepository = weatherDataRepository
 ) {
     suspend operator fun invoke(
@@ -32,6 +32,29 @@ class GetWeatherByCityUseCase(
         context: CoroutineContext
     ) = try {
         withContext(context) { repository.retrieveByCityName(cityName) }
+            .run { state.value = doOnSuccessfulResponse() }
+    } catch (exception: Exception) {
+        state.postValue(ErrorState(exception.message))
+    }
+
+    suspend operator fun invoke(
+        longitude: Double?,
+        latitude:Double?,
+        state: MutableLiveData<WeatherDataState>,
+        isConnected: Boolean,
+        context: CoroutineContext=Dispatchers.IO
+    ) = context.takeIf { isConnected }
+        ?.takeUnless { state.value == LoadingState || longitude==null||latitude==null }
+        ?.also { state.postValue(LoadingState) }
+        ?.let { makeRequest(longitude!!, latitude!!,state,context) }
+
+    private suspend fun makeRequest(
+        longitude: Double,
+        latitude:Double,
+        state: MutableLiveData<WeatherDataState>,
+        context: CoroutineContext
+    ) = try {
+        withContext(context) { repository.retrieveByLocation(longitude,latitude) }
             .run { state.value = doOnSuccessfulResponse() }
     } catch (exception: Exception) {
         state.postValue(ErrorState(exception.message))
