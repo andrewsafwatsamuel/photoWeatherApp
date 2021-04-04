@@ -1,7 +1,8 @@
-package com.andrew.photoweatherapp
+package com.andrew.photoweatherapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.andrew.photoweatherapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
