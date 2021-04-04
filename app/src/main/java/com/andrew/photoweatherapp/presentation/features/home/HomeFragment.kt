@@ -7,15 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.andrew.photoweatherapp.R
+import com.andrew.photoweatherapp.databinding.FragmentHomeBinding
 import com.andrew.photoweatherapp.presentation.*
 import java.lang.Exception
 
 class HomeFragment : Fragment() {
 
+    private lateinit var binding:FragmentHomeBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        binding= FragmentHomeBinding.inflate(inflater)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -8,4 +8,15 @@
     <string name="allow">Allow</string>
     <string name="cancel">Cancel</string>
     <string name="grant_location_permission">Please allow the app to use your location to contiue</string>
+    <string name="city_name">City name</string>
+    <string name="search">search</string>
+    <string name="saved_photos">Saved photos</string>
+    <string name="photo_place_holder">photo place holder</string>
+    <string name="open_camera">open camera</string>
+    <string name="details">Details</string>
+    <string name="feels_like">Feels like:</string>
+    <string name="pressure">pressure:</string>
+    <string name="humidity">Humidity:</string>
+    <string name="wind">Wind:</string>
+    <string name="pick_current_weather_then_capture_a_photo">pick current weather then capture a photo</string>
 </resources>
