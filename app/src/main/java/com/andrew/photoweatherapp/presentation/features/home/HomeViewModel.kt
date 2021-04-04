@@ -1,8 +1,10 @@
 package com.andrew.photoweatherapp.presentation.features.home
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andrew.photoweatherapp.domain.GetWeatherDataUseCase
+import com.andrew.photoweatherapp.domain.IdleState
 import com.andrew.photoweatherapp.domain.WeatherDataState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +17,11 @@ class HomeViewModel(
 ) : ViewModel() {
     private val job = Job()
     private val uiScope = CoroutineScope(job + Dispatchers.Main)
+
+    init {
+        state.value = IdleState
+        Log.d("##########","init is called")
+    }
 
     fun getDataByLocation(
         longitude: Double?,

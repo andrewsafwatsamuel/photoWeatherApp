@@ -6,14 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.andrew.photoweatherapp.R
+import androidx.lifecycle.ViewModelProvider
 import com.andrew.photoweatherapp.databinding.FragmentHomeBinding
 import com.andrew.photoweatherapp.presentation.*
 import java.lang.Exception
 
 class HomeFragment : Fragment() {
 
-    private lateinit var binding:FragmentHomeBinding
+    lateinit var binding:FragmentHomeBinding
+        private set
+
+    private val viewModel by lazy {
+        ViewModelProvider(this@HomeFragment, ViewModelProvider.NewInstanceFactory())[HomeViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,12 +30,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requestLocationOnGrantedPermission(::onLocationSuccess, ::onLocationError)
+        binding.searchCardView.setOnClickListener {
+            viewModel.getDataByCityName(getCityText(),true)
+        }
+        viewModel.state.observe(viewLifecycleOwner,::drawStates)
     }
 
-    private fun onLocationSuccess(location: Location?) = Unit
-
-    private fun onLocationError(exception: Exception) = Unit
+    private fun getCityText()=binding.cityNameEditTextText.text?.toString()?:""
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -43,4 +49,8 @@ class HomeFragment : Fragment() {
             ::onLocationError
         )
     }
+
+    private fun onLocationError(exception: Exception) = Unit
+
+    private fun onLocationSuccess(location: Location?) = Unit
 }
