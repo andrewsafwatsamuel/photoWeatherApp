@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private val mainBottomNav by lazy { findViewById<BottomNavigationView>(R.id.main_bottomNavigationView) }
     private val mainNavController by lazy { findNavController(R.id.main_navigation_fragment) }
-    private val hiddenBottomNav by lazy { listOf(R.id.splashFragment) }
+    private val hiddenBottomNav by lazy { listOf(R.id.splashFragment,R.id.cameraFragment) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
