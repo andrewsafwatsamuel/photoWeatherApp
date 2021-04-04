@@ -28,7 +28,7 @@ class SplashFragment : Fragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Thread.sleep(1000)
-        findNavController().navigate(R.id.action_splashFragment_to_cameraFragment)
+        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
     }
 }
 
