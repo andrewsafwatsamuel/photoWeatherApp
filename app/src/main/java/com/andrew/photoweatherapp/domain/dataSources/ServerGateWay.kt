@@ -1,7 +1,6 @@
 package com.andrew.photoweatherapp.domain.dataSources
 
 import com.andrew.photoweatherapp.entities.WeatherData
-import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -36,7 +35,7 @@ private val retrofitInstance by lazy {
         .build()
 }
 
-val apiClient by lazy { retrofitInstance.create(ApiClient::class.java) }
+val apiClient: ApiClient by lazy { retrofitInstance.create(ApiClient::class.java) }
 
 interface ApiClient {
 
@@ -47,7 +46,7 @@ interface ApiClient {
 
     @GET("weather")
     suspend fun getWeatherDataByCoordinates(
-        @Query("lat") latitude: String,
-        @Query("lon") longitude: String
+        @Query("lat") latitude: Double,
+        @Query("lon") longitude: Double
     ): Response<WeatherData>
 }

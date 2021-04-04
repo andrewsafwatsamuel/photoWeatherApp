@@ -17,11 +17,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_home, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requestLocationOnGrantedPermission(::onLocationSuccess, ::onLocationError)
-    }
-
     private fun onLocationSuccess(location: Location?) =Unit
     private fun onLocationError(exception: Exception) = Unit
 
@@ -31,6 +26,9 @@ class HomeFragment : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (permissions.size == 1 && requestCode == LOCATION_REQUEST_CODE) onPermissionResult(::onLocationSuccess, ::onLocationError)
+        if (permissions.size == 1 && requestCode == LOCATION_REQUEST_CODE) onPermissionResult(
+            ::onLocationSuccess,
+            ::onLocationError
+        )
     }
 }
