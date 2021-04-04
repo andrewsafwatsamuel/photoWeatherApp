@@ -1,12 +1,18 @@
 package com.andrew.photoweatherapp.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.andrew.photoweatherapp.R
+import com.andrew.photoweatherapp.domain.dataSources.apiClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +25,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mainBottomNav.setupWithNavController(mainNavController)
         mainNavController.addOnDestinationChangedListener { _, destination, _ ->
-            mainBottomNav.visibility = if (destination.id in hiddenBottomNav) View.GONE else View.VISIBLE
+            mainBottomNav.visibility =
+                if (destination.id in hiddenBottomNav) View.GONE else View.VISIBLE
         }
+        mainBottomNav.setOnNavigationItemReselectedListener {  }
     }
 }
