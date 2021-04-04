@@ -13,7 +13,7 @@ object BadLocationState : WeatherDataState()
 data class ErrorState(val message: String?) : WeatherDataState()
 data class DataState(val data: WeatherData) : WeatherDataState()
 
-class GetWeatherDataCase(
+class GetWeatherDataUseCase(
     private val repository: WeatherDataRepository = weatherDataRepository
 ) {
     suspend operator fun invoke(
