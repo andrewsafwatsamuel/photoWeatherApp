@@ -54,4 +54,15 @@ dependencies {
     //scalable sizes
     implementation "com.intuit.sdp:sdp-android:$scalable_size_version"
     implementation "com.intuit.ssp:ssp-android:$scalable_size_version"
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
+
+    //coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
+
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
 }
