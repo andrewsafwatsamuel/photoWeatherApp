@@ -4,6 +4,8 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 }
 
+def scalable_size_version = "1.0.6"
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -48,4 +50,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //scalable sizes
+    implementation "com.intuit.sdp:sdp-android:$scalable_size_version"
+    implementation "com.intuit.ssp:ssp-android:$scalable_size_version"
 }

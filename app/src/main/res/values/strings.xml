@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PhotoWeatherApp</string>
+    <string name="splash_screen_text">Pick, Capture, Share</string>
 </resources>
