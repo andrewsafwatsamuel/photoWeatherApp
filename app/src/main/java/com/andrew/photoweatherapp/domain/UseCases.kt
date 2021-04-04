@@ -45,6 +45,7 @@ class GetWeatherDataCase(
         context: CoroutineContext=Dispatchers.IO
     ) = context.takeIf { isConnected }
         ?.takeUnless { state.value == LoadingState || longitude==null||latitude==null }
+        .also { if (longitude==null||latitude==null)state.value = BadLocationState }
         ?.also { state.postValue(LoadingState) }
         ?.let { makeRequest(longitude!!, latitude!!,state,context) }
 
