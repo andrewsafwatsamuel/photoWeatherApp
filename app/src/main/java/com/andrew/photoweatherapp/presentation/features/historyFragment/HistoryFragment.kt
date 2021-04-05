@@ -19,8 +19,10 @@ import com.andrew.photoweatherapp.presentation.show
 
 class HistoryFragment : Fragment() {
 
-    lateinit var binding: FragmentHistoryBinding
-    private val thumbAdapter by lazy { ThumbRecyclerAdapter {} }
+    private lateinit var binding: FragmentHistoryBinding
+    private val thumbAdapter by lazy {
+        ThumbRecyclerAdapter {navigateToShare(it.thumbToPhoto())}
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,17 +52,21 @@ class HistoryFragment : Fragment() {
         ?.filter { it.contains(THUMBS) }
         ?.toList()
 
-    fun drawEmptyState() = with(binding) {
+    private fun drawEmptyState() = with(binding) {
         thumbRecyclerView.hide()
         emptyLayout.show()
     }
 
-    fun drawDataState(items:List<String>) = with(binding) {
+    private fun drawDataState(items:List<String>) = with(binding) {
         thumbRecyclerView.show()
         emptyLayout.hide()
         thumbRecyclerView.adapter = thumbAdapter
         thumbAdapter.submitList(items)
     }
+
+    private fun navigateToShare(uri:String)=HistoryFragmentDirections
+        .actionHistoryFragmentToShareFragment(uri)
+        .let { findNavController().navigate(it) }
 
     private fun String.thumbToPhoto() = replace(THUMBS, PHOTOS)
 }

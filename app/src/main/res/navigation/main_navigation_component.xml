@@ -37,7 +37,11 @@
         android:id="@+id/historyFragment"
         android:name="com.andrew.photoweatherapp.presentation.features.historyFragment.HistoryFragment"
         android:label="@string/saved_photos"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_shareFragment"
+            app:destination="@id/shareFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.andrew.photoweatherapp.presentation.features.cameraScreen.CameraFragment"
