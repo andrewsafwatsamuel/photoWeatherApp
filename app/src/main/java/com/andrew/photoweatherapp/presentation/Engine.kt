@@ -71,7 +71,7 @@ fun Image.toByteArray(): ByteArray {
 suspend fun Context.saveCapturedPhoto(view: View): String {
     val time = System.currentTimeMillis().toString()
     val photoBitmap = getBitmapFromView(view)
-    val thumbnail = ThumbnailUtils.extractThumbnail(photoBitmap, 100, 100)
+    val thumbnail = ThumbnailUtils.extractThumbnail(photoBitmap, 430, 700)
     val normalSize = createFile(PHOTOS, time)
     withContext(Dispatchers.IO) {
         createFile(THUMBS, time).save(thumbnail?.toByteArray() ?: byteArrayOf())
