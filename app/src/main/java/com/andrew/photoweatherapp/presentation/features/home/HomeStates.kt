@@ -1,5 +1,6 @@
 package com.andrew.photoweatherapp.presentation.features.home
 
+import androidx.navigation.fragment.findNavController
 import com.andrew.photoweatherapp.databinding.FragmentHomeBinding
 import com.andrew.photoweatherapp.domain.*
 import com.andrew.photoweatherapp.entities.WeatherData
@@ -39,10 +40,10 @@ private fun HomeFragment.drawData(data: WeatherData) = with(binding) {
     weatherDataProgressBar.hide()
     idleLayout.hide()
     dataLayout.show()
-    drawData(data)
+    drawDataState(data)
 }
 
-private fun FragmentHomeBinding.drawData(data: WeatherData) {
+private fun HomeFragment.drawDataState(data: WeatherData)= with(binding) {
     cityNameTextView.text = data.name
     stateTextView.text = (data.wind?.speed ?: 0).toString()
     currentTempTextView.text = data.main?.temp.toString()
@@ -50,6 +51,11 @@ private fun FragmentHomeBinding.drawData(data: WeatherData) {
     pressureTextView.text = data.main?.pressure.toString()
     humidityTextView.text = data.main?.humidity.toString()
     windTextView.text = (data.wind?.speed ?: 0).toString()
+    cameraCardView.setOnClickListener {
+        HomeFragmentDirections.actionHomeFragmentToCameraFragment(data)
+            .let { findNavController().navigate(it) }
+    }
+
 }
 
 private fun HomeFragment.drawBadLocation() = with(binding) {

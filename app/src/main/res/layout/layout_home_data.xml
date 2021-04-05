@@ -47,7 +47,7 @@
                 app:srcCompat="@drawable/ic_picture" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView3"
+                android:id="@+id/camera_cardView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_24sdp"
@@ -105,7 +105,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+                app:layout_constraintTop_toBottomOf="@+id/camera_cardView" />
 
             <View
                 android:id="@+id/view"
