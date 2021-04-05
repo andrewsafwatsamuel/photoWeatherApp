@@ -12,6 +12,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.andrew.photoweatherapp.databinding.FragmentCameraBinding
 import com.andrew.photoweatherapp.presentation.*
 import kotlinx.coroutines.CoroutineScope
@@ -66,7 +67,6 @@ class CameraFragment : Fragment() {
         binding.cancelImageView.setOnClickListener { viewModel.cancelPhoto() }
         binding.saveImageView.setOnClickListener { viewModel.setLoading();savePhoto() }
         viewModel.stateLiveData.observe(viewLifecycleOwner, ::drawStates)
-
         binding.cityNameTextView.text = args.data.name.toString()
         binding.currentTempTextView.text = args.data.main?.temp.toString()
         binding.feelsLikeTextView.text=args.data.main?.feelsLike.toString()
@@ -94,7 +94,7 @@ class CameraFragment : Fragment() {
         is IdleState -> drawIdle()
         is LoadingState -> disableButtons()
         is CapturedState -> drawCaptured()
-        is com.andrew.photoweatherapp.presentation.features.cameraScreen.SavedState -> drawSaved()
+        is Saved -> navigateToShare(state.uri?:"")
     }
 
     private fun drawIdle() = with(binding) {
@@ -127,15 +127,15 @@ class CameraFragment : Fragment() {
         cancelImageView.disable()
     }
 
-    private fun drawSaved() {
-        Toast.makeText(requireContext(), "saved", Toast.LENGTH_LONG).show()
-        enableButtons()
+    private fun navigateToShare(uri:String)=CameraFragmentDirections
+        .actionCameraFragmentToShareFragment(uri)
+        .let { findNavController().navigate(it) }
+
+    private fun savePhoto()= CoroutineScope(job+Dispatchers.Main).launch{
+       val uri= requireContext().saveCapturedPhoto(binding.frameLayout)
+        viewModel.setSaved(uri)
     }
 
-    fun savePhoto()= CoroutineScope(job+Dispatchers.Main).launch{
-        requireContext().saveCapturedPhoto(binding.frameLayout)
-        viewModel.setSaved()
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         job.cancel()

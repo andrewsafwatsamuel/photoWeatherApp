@@ -7,7 +7,7 @@ sealed class CameraState
 object IdleState : CameraState()
 object LoadingState : CameraState()
 object CapturedState : CameraState()
-object SavedState : CameraState()
+data class Saved(val uri:String?) : CameraState()
 
 class CameraViewModel(
     val stateLiveData: MutableLiveData<CameraState> = MutableLiveData()
@@ -34,7 +34,7 @@ class CameraViewModel(
         stateLiveData.value = LoadingState
     }
 
-    fun setSaved(){
-        stateLiveData.value = SavedState
+    fun setSaved(uri: String?){
+        stateLiveData.value = Saved(uri)
     }
 }

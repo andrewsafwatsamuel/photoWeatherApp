@@ -45,5 +45,19 @@
         <argument
             android:name="data"
             app:argType="com.andrew.photoweatherapp.entities.WeatherData" />
+        <action
+            android:id="@+id/action_cameraFragment_to_shareFragment"
+            app:destination="@id/shareFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/shareFragment"
+        android:name="com.andrew.photoweatherapp.ShareFragment"
+        android:label="fragment_share"
+        tools:layout="@layout/fragment_share" >
+        <argument
+            android:name="uri"
+            app:argType="string" />
     </fragment>
 </navigation>
