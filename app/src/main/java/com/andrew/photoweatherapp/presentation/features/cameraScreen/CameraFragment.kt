@@ -14,6 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.andrew.photoweatherapp.databinding.FragmentCameraBinding
 import com.andrew.photoweatherapp.presentation.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class CameraFragment : Fragment() {
 
@@ -44,6 +48,8 @@ class CameraFragment : Fragment() {
 
     private val args by lazy { CameraFragmentArgs.fromBundle(requireArguments()) }
 
+    private val job= Job()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,7 +64,7 @@ class CameraFragment : Fragment() {
         startCamera()
         binding.captureImageView.setOnClickListener { capture() }
         binding.cancelImageView.setOnClickListener { viewModel.cancelPhoto() }
-        binding.saveImageView.setOnClickListener { viewModel.setSaved() }
+        binding.saveImageView.setOnClickListener { viewModel.setLoading();savePhoto() }
         viewModel.stateLiveData.observe(viewLifecycleOwner, ::drawStates)
 
         binding.cityNameTextView.text = args.data.name.toString()
@@ -124,5 +130,14 @@ class CameraFragment : Fragment() {
     private fun drawSaved() {
         Toast.makeText(requireContext(), "saved", Toast.LENGTH_LONG).show()
         enableButtons()
+    }
+
+    fun savePhoto()= CoroutineScope(job+Dispatchers.Main).launch{
+        requireContext().saveCapturedPhoto(binding.frameLayout)
+        viewModel.setSaved()
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        job.cancel()
     }
 }
