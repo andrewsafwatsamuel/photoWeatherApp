@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.andrew.photoweatherapp.R
 import com.andrew.photoweatherapp.databinding.FragmentHomeBinding
 import com.andrew.photoweatherapp.presentation.*
 import java.lang.Exception
@@ -34,6 +36,7 @@ class HomeFragment : Fragment() {
             viewModel.getDataByCityName(getCityText(),true)
         }
         viewModel.state.observe(viewLifecycleOwner,::drawStates)
+        binding.savedPhotosButton.setOnClickListener { findNavController().navigate(R.id.action_homeFragment_to_historyFragment) }
     }
 
     private fun getCityText()=binding.cityNameEditTextText.text?.toString()?:""
