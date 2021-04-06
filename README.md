@@ -21,6 +21,6 @@ screens: SplashScreen, HomeScreen, CameraScreen, HistoryScreen and ShareScreen
    
    5. ShareScreen: <br/>
            a. contains full sized photo with facebook and twitter share 
-           b. on button clicked the app checks the presence of facebook or twitter on phone according to the clicked button. if is present \ 
-           thh app show various sharing options inside a choser else it redirects to playstory to the app's page to download and share. \
+           b. on button clicked the app checks the presence of facebook or twitter on phone according to the clicked button. if is present  
+           theh app show various sharing options inside a choser else it redirects to playstory to the app's page to download and share. 
            c. on clicking on choser item it opens the specified app to share. 
