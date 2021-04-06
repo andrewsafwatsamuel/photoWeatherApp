@@ -22,7 +22,8 @@ import kotlinx.coroutines.launch
 
 class CameraFragment : Fragment() {
 
-    private lateinit var binding: FragmentCameraBinding
+    lateinit var binding: FragmentCameraBinding
+        private set
     private val cameraProvider by lazy { ProcessCameraProvider.getInstance(requireContext()) }
     private lateinit var camera: Camera
     private val preview by lazy { Preview.Builder().build() }
@@ -43,7 +44,7 @@ class CameraFragment : Fragment() {
         }
     }
 
-    private val viewModel by lazy {
+    val viewModel by lazy {
         ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[CameraViewModel::class.java]
     }
 
@@ -67,7 +68,7 @@ class CameraFragment : Fragment() {
         viewModel.stateLiveData.observe(viewLifecycleOwner, ::drawStates)
         binding.cityNameTextView.text = args.data.name.toString()
         binding.currentTempTextView.text = args.data.main?.temp.toString()
-        binding.feelsLikeTextView.text=args.data.main?.feelsLike.toString()
+        binding.feelsLikeTextView.text = args.data.main?.feelsLike.toString()
         binding.humidityTextView.text = args.data.main?.humidity.toString()
         binding.windTextView.text = args.data.wind?.speed?.toString()
         binding.pressureTextView.text = args.data.main?.pressure.toString()
@@ -88,49 +89,9 @@ class CameraFragment : Fragment() {
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    private fun drawStates(state: CameraState) = when (state) {
-        is IdleState -> drawIdle()
-        is LoadingState -> disableButtons()
-        is CapturedState -> drawCaptured()
-        is Saved -> navigateToShare(state.uri?:"")
-    }
 
-    private fun drawIdle() = with(binding) {
-        cameraView.show()
-        captureImageView.show()
-        saveLayout.hide()
-        photoViewImageView.hide()
-        enableButtons()
-
-    }
-
-    private fun drawCaptured() = with(binding) {
-        cameraView.hide()
-        captureImageView.hide()
-        saveLayout.show()
-        photoViewImageView.show()
-        photoViewImageView.setImageURI(Uri.parse(viewModel.temporaryUriString))
-        enableButtons()
-    }
-
-    private fun enableButtons() = with(binding) {
-        captureImageView.enable()
-        saveImageView.enable()
-        cancelImageView.enable()
-    }
-
-    private fun disableButtons() = with(binding) {
-        captureImageView.disable()
-        saveImageView.disable()
-        cancelImageView.disable()
-    }
-
-    private fun navigateToShare(uri:String)=CameraFragmentDirections
-        .actionCameraFragmentToShareFragment(uri)
-        .let { findNavController().navigate(it) }
-
-    private fun savePhoto()= CoroutineScope(viewModel.camerJob+Dispatchers.Main).launch{
-       val uri= requireContext().saveCapturedPhoto(binding.frameLayout)
+    private fun savePhoto() = CoroutineScope(viewModel.cameraJob + Dispatchers.Main).launch {
+        val uri = requireContext().saveCapturedPhoto(binding.frameLayout)
         viewModel.setSaved(uri)
     }
 }

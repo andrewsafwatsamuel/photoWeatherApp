@@ -14,7 +14,7 @@ class CameraViewModel(
     val stateLiveData: MutableLiveData<CameraState> = MutableLiveData()
 ) : ViewModel() {
 
-    val camerJob = Job()
+    val cameraJob = Job()
 
     var temporaryUriString = ""
 
@@ -44,6 +44,6 @@ class CameraViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        camerJob.cancel()
+        cameraJob.cancel()
     }
 }
