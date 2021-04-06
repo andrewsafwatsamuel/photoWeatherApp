@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/shareFragment"
-        android:name="com.andrew.photoweatherapp.ShareFragment"
+        android:name="com.andrew.photoweatherapp.presentation.features.ShareFragment"
         android:label="fragment_share"
         tools:layout="@layout/fragment_share" >
         <argument
