@@ -2,6 +2,7 @@ package com.andrew.photoweatherapp.presentation.features.cameraScreen
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Job
 
 sealed class CameraState
 object IdleState : CameraState()
@@ -12,6 +13,9 @@ data class Saved(val uri:String?) : CameraState()
 class CameraViewModel(
     val stateLiveData: MutableLiveData<CameraState> = MutableLiveData()
 ) : ViewModel() {
+
+    val camerJob = Job()
+
     var temporaryUriString = ""
 
     init {
@@ -36,5 +40,10 @@ class CameraViewModel(
 
     fun setSaved(uri: String?){
         stateLiveData.value = Saved(uri)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        camerJob.cancel()
     }
 }

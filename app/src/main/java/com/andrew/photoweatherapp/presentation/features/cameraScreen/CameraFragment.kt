@@ -49,8 +49,6 @@ class CameraFragment : Fragment() {
 
     private val args by lazy { CameraFragmentArgs.fromBundle(requireArguments()) }
 
-    private val job= Job()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -131,13 +129,8 @@ class CameraFragment : Fragment() {
         .actionCameraFragmentToShareFragment(uri)
         .let { findNavController().navigate(it) }
 
-    private fun savePhoto()= CoroutineScope(job+Dispatchers.Main).launch{
+    private fun savePhoto()= CoroutineScope(viewModel.camerJob+Dispatchers.Main).launch{
        val uri= requireContext().saveCapturedPhoto(binding.frameLayout)
         viewModel.setSaved(uri)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        job.cancel()
     }
 }
