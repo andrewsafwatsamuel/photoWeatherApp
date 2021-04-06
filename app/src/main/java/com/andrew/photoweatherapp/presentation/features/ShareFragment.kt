@@ -1,4 +1,4 @@
-package com.andrew.photoweatherapp
+package com.andrew.photoweatherapp.presentation.features
 
 import android.net.Uri
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import com.andrew.photoweatherapp.R
 import com.andrew.photoweatherapp.databinding.FragmentShareBinding
 import com.andrew.photoweatherapp.presentation.FACEBOOK_PACKAGE
 import com.andrew.photoweatherapp.presentation.TWITTER_PACKAGE
