@@ -38,6 +38,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.searchCardView.setOnClickListener {
+            activity?.hideKeyboard()
             context?.run { viewModel.getDataByCityName(getCityText(), checkConnectivity()) }
         }
         viewModel.state.observe(viewLifecycleOwner, ::drawStates)

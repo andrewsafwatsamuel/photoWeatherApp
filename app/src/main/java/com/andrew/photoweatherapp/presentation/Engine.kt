@@ -1,5 +1,6 @@
 package com.andrew.photoweatherapp.presentation
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -9,14 +10,15 @@ import android.net.ConnectivityManager
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
-import java.lang.Exception
 import java.nio.ByteBuffer
+
 
 const val THUMBS = "thumbs"
 const val PHOTOS = "photos"
@@ -101,3 +103,8 @@ fun Bitmap.toByteArray(): ByteArray {
 fun Context.checkConnectivity() =
     (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected
         ?: false
+
+fun Activity.hideKeyboard() =
+    (getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .takeIf { currentFocus != null }
+        ?.run { hideSoftInputFromWindow(currentFocus!!.windowToken, 0) }
