@@ -1,5 +1,6 @@
 package com.andrew.photoweatherapp.presentation
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
@@ -12,21 +13,19 @@ import java.io.File
 const val TWITTER_PACKAGE = "com.twitter.android"
 const val FACEBOOK_PACKAGE = "com.facebook.katana"
 
-fun shareImage(context: Context, imagePath: String, packageId: String) =
-    if (context.packageManager.getLaunchIntentForPackage(packageId) == null) {
-        Toast.makeText(context, "Please first install the app", Toast.LENGTH_SHORT).show()
-        context.startPlayStore(packageId)
-    } else {
-        imagePath.takeIf { it.isNotBlank() }
-            ?.let { context.composeImageUri(imagePath) }
-            ?.let { context.startIntent(packageId, it) }
-    }
+fun shareImage(context: Context, imagePath: String, packageId: String) = imagePath
+    .takeIf { it.isNotBlank() }
+    ?.let { context.composeImageUri(imagePath) }
+    ?.let { context.startIntent(packageId, it) }
 
 private fun Context.startIntent(packageId: String, uri: Uri) = try {
     startShareIntent(packageId, uri)
 } catch (ex: Exception) {
-    Toast.makeText(this, "Please first install the app", Toast.LENGTH_SHORT).show()
-    startPlayStore(packageId)
+    if (ex is ActivityNotFoundException) {
+        Toast.makeText(this, "Please first install the app", Toast.LENGTH_SHORT).show()
+        startPlayStore(packageId)
+    }
+    Log.e("ImageShareHelper", ex.message, ex)
 }
 
 private fun Context.startShareIntent(
