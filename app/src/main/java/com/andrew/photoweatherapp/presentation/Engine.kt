@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.media.Image
 import android.media.ThumbnailUtils
+import android.net.ConnectivityManager
 import android.os.Environment
 import android.util.Log
 import android.view.View
@@ -95,3 +96,8 @@ fun Bitmap.toByteArray(): ByteArray {
     stream.close()
     return byteArray
 }
+
+@Suppress("DEPRECATION")
+fun Context.checkConnectivity() =
+    (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected
+        ?: false

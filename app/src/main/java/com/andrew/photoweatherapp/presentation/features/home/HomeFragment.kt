@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.searchCardView.setOnClickListener {
-            viewModel.getDataByCityName(getCityText(),true)
+            context?.run { viewModel.getDataByCityName(getCityText(),checkConnectivity()) }
         }
         viewModel.state.observe(viewLifecycleOwner,::drawStates)
         binding.savedPhotosButton.setOnClickListener { findNavController().navigate(R.id.action_homeFragment_to_historyFragment) }

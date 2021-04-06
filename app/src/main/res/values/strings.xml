@@ -24,4 +24,5 @@
     <string name="share_to_twitter">share to twitter</string>
     <string name="capture">capture</string>
     <string name="save">save</string>
+    <string name="lost_internet_connection">Lost internet connection</string>
 </resources>
