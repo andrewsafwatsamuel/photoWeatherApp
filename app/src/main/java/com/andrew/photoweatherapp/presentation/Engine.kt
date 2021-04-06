@@ -19,7 +19,6 @@ import java.io.FileOutputStream
 import java.io.OutputStream
 import java.nio.ByteBuffer
 
-
 const val THUMBS = "thumbs"
 const val PHOTOS = "photos"
 
