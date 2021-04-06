@@ -17,7 +17,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline5"
-        app:srcCompat="@drawable/ic_dot" />
+        app:srcCompat="@drawable/ic_dot"
+        android:contentDescription="@string/capture" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -48,7 +49,8 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:visibility="gone"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/photo" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -223,7 +225,8 @@
             android:layout_height="@dimen/_70sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:padding="@dimen/_20sdp"
-            app:srcCompat="@drawable/ic_cancel" />
+            app:srcCompat="@drawable/ic_cancel"
+            android:contentDescription="@string/save" />
 
         <ImageView
             android:id="@+id/save_imageView"
@@ -231,6 +234,7 @@
             android:layout_height="@dimen/_70sdp"
             android:layout_marginStart="@dimen/_16sdp"
             android:padding="@dimen/_20sdp"
-            app:srcCompat="@drawable/ic_check" />
+            app:srcCompat="@drawable/ic_check"
+            android:contentDescription="@string/cancel" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

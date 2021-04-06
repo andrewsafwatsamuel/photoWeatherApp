@@ -22,4 +22,6 @@
     <string name="photo" />
     <string name="share_to_facebook">share to facebook</string>
     <string name="share_to_twitter">share to twitter</string>
+    <string name="capture">capture</string>
+    <string name="save">save</string>
 </resources>
