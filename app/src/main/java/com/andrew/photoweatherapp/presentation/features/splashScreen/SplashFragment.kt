@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.andrew.photoweatherapp.R
-import com.andrew.photoweatherapp.presentation.requestNotGrantedPermissions
+import java.util.*
 
 class SplashFragment : Fragment() {
 
@@ -18,17 +18,11 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            requestNotGrantedPermissions()
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Thread.sleep(1000)
-        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+            }
+        }, 2000)
     }
 }
 
