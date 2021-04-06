@@ -1,7 +1,6 @@
 package com.andrew.photoweatherapp.presentation.features.home
 
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,7 +14,6 @@ import com.andrew.photoweatherapp.R
 import com.andrew.photoweatherapp.databinding.FragmentHomeBinding
 import com.andrew.photoweatherapp.entities.WeatherData
 import com.andrew.photoweatherapp.presentation.*
-import java.lang.Exception
 
 class HomeFragment : Fragment() {
 
@@ -56,10 +54,6 @@ class HomeFragment : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (permissions.size == 1 && requestCode == LOCATION_REQUEST_CODE) onPermissionResult(
-            ::onLocationSuccess,
-            ::onLocationError
-        )
         if (permissions.size == 1 && requestCode == CAMERA_REQUEST_CODE) onCameraPermissionResult()
     }
 
@@ -68,10 +62,6 @@ class HomeFragment : Fragment() {
         if (context?.checkSelfPermission(CAMERA_PERMISSION) == PackageManager.PERMISSION_GRANTED) navigateToCamera(it)
         else onDeniedPermission(R.string.grant_camera_permission, CAMERA_PERMISSION){checkCameraPermission(it)}
     }
-
-    private fun onLocationError(exception: Exception) = Unit
-
-    private fun onLocationSuccess(location: Location?) = Unit
 
     fun checkCameraPermission(data: WeatherData) =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) shouldRequestPermission(data)

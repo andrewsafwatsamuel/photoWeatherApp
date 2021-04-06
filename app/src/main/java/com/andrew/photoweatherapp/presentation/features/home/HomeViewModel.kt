@@ -1,6 +1,5 @@
 package com.andrew.photoweatherapp.presentation.features.home
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andrew.photoweatherapp.domain.GetWeatherDataUseCase
@@ -22,18 +21,10 @@ class HomeViewModel(
         state.value = IdleState
     }
 
-    fun getDataByLocation(
-        longitude: Double?,
-        latitude: Double?,
-        isConnected: Boolean,
-        scope: CoroutineScope = uiScope
-    ) = scope.launch { useCase(longitude, latitude, state, isConnected) }
-
     fun getDataByCityName(
         cityName: String,
-        isConnected: Boolean,
-        scope: CoroutineScope = uiScope
-    ) = scope.launch { useCase(cityName, state, isConnected) }
+        isConnected: Boolean
+    ) = uiScope.launch { useCase(cityName, state, isConnected) }
 
     override fun onCleared() {
         super.onCleared()

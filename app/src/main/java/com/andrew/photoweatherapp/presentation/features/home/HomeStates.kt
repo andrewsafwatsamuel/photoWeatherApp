@@ -12,7 +12,6 @@ fun HomeFragment.drawStates(state: WeatherDataState) = when (state) {
     is LoadingState -> drawLoading()
     is ErrorState -> drawError(state.message)
     is DataState -> drawData(state.data)
-    is BadLocationState -> drawBadLocation()
 }
 
 private fun HomeFragment.drawIdle() = with(binding) {
@@ -51,8 +50,4 @@ private fun HomeFragment.drawDataState(data: WeatherData) = with(binding) {
     windTextView.text = (data.wind?.speed ?: 0).toString()
     weatherData = data
     cameraCardView.setOnClickListener { checkCameraPermission(data) }
-}
-
-private fun HomeFragment.drawBadLocation() = with(binding) {
-    searchCardView.enable()
 }

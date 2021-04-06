@@ -49,9 +49,4 @@ interface ApiClient {
         @Query("q") cityName: String
     ): Response<WeatherData>
 
-    @GET("weather")
-    suspend fun getWeatherDataByCoordinates(
-        @Query("lat") latitude: Double,
-        @Query("lon") longitude: Double
-    ): Response<WeatherData>
 }
