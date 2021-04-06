@@ -1,5 +1,6 @@
 package com.andrew.photoweatherapp.presentation.features.home
 
+import com.andrew.photoweatherapp.R
 import com.andrew.photoweatherapp.domain.*
 import com.andrew.photoweatherapp.entities.WeatherData
 import com.andrew.photoweatherapp.presentation.*
@@ -18,6 +19,7 @@ private fun HomeFragment.drawIdle() = with(binding) {
     searchCardView.enable()
     weatherDataProgressBar.hide()
     idleLayout.show()
+    idleTextView.text = getString(R.string.pick_current_weather_then_capture_a_photo)
     dataLayout.hide()
 }
 
@@ -30,6 +32,12 @@ private fun HomeFragment.drawLoading() = with(binding) {
 
 private fun HomeFragment.drawError(message: String?) = with(binding) {
     searchCardView.enable()
+    weatherDataProgressBar.hide()
+    idleLayout.show()
+    idleTextView.text =
+        if (message == "Not Found") getString(R.string.not_found_search)
+        else message ?: getString(R.string.un_known_error)
+    dataLayout.hide()
 }
 
 private fun HomeFragment.drawData(data: WeatherData) = with(binding) {

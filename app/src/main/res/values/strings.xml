@@ -26,4 +26,6 @@
     <string name="save">save</string>
     <string name="lost_internet_connection">Lost internet connection</string>
     <string name="grant_camera_permission">Allow app to access your camera to proceed</string>
+    <string name="un_known_error">Unknown error</string>
+    <string name="not_found_search">City Not Found</string>
 </resources>
