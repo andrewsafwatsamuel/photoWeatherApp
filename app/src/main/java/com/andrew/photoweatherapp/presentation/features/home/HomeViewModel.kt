@@ -20,7 +20,6 @@ class HomeViewModel(
 
     init {
         state.value = IdleState
-        Log.d("##########","init is called")
     }
 
     fun getDataByLocation(

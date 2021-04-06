@@ -13,33 +13,29 @@ import com.andrew.photoweatherapp.R
 
 const val CAMERA_PERMISSION = android.Manifest.permission.CAMERA
 const val LOCATION_PERMISSION = android.Manifest.permission.ACCESS_FINE_LOCATION
-const val PERMISSIONS_CODE = 101
+const val CAMERA_REQUEST_CODE = 101
 const val LOCATION_REQUEST_CODE = 102
-
-fun Fragment.requestNotGrantedPermissions() {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) requestPermissions(
-        arrayOf(CAMERA_PERMISSION, LOCATION_PERMISSION),
-        PERMISSIONS_CODE
-    )
-}
 
 fun Context.isPermissionGranted(permission: String) = ContextCompat
     .checkSelfPermission(this, permission)
     .let { it == PackageManager.PERMISSION_GRANTED }
 
-fun Fragment.onDeniedPermission(message: Int, permission: String) = AlertDialog
+fun Fragment.onDeniedPermission(message: Int, permission: String,requestPermission: () -> Unit) = AlertDialog
     .Builder(requireContext())
     .setMessage(message)
-    .setPositiveButton(R.string.allow) { _, _ -> onAllowedRetry(permission) }
+    .setPositiveButton(R.string.allow) { _, _ -> onAllowedRetry(permission,requestPermission) }
     .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
     .create()
     .show()
 
-private fun Fragment.onAllowedRetry(permission: String) =
-    if (shouldShowRequestPermissionRationale(permission)) requestLocationPermission()
-    else requireContext().openSettings()
+private fun Fragment.onAllowedRetry(permission: String, requestPermission: () -> Unit) =
+    if (shouldShowRequestPermissionRationale(permission)) {
+        requestPermission()
+    } else {
+        requireContext().openSettings()
+    }
 
-private fun Context.openSettings() = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+fun Context.openSettings() = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
     .apply { data = Uri.fromParts("package", packageName, null) }
     .let { startActivity(it) }
 

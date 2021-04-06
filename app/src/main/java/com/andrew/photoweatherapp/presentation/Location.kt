@@ -52,5 +52,5 @@ fun Fragment.onPermissionResult(
 ) = if (context?.isPermissionGranted(LOCATION_PERMISSION) == true) {
     requestLocationOnGrantedPermission(onSuccess, onError, locationProvider)
 } else {
-    onDeniedPermission(R.string.grant_location_permission,LOCATION_PERMISSION)
+    onDeniedPermission(R.string.grant_location_permission,LOCATION_PERMISSION){requestLocationPermission()}
 }
