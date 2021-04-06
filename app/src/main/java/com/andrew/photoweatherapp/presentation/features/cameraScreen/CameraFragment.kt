@@ -1,23 +1,19 @@
 package com.andrew.photoweatherapp.presentation.features.cameraScreen
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.andrew.photoweatherapp.databinding.FragmentCameraBinding
 import com.andrew.photoweatherapp.presentation.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class CameraFragment : Fragment() {
@@ -62,23 +58,29 @@ class CameraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         startCamera()
-        binding.captureImageView.setOnClickListener { capture() }
-        binding.cancelImageView.setOnClickListener { viewModel.cancelPhoto() }
-        binding.saveImageView.setOnClickListener { viewModel.setLoading();savePhoto() }
+        setButtonClicks()
         viewModel.stateLiveData.observe(viewLifecycleOwner, ::drawStates)
-        binding.cityNameTextView.text = args.data.name.toString()
-        binding.currentTempTextView.text = args.data.main?.temp.toString()
-        binding.feelsLikeTextView.text = args.data.main?.feelsLike.toString()
-        binding.humidityTextView.text = args.data.main?.humidity.toString()
-        binding.windTextView.text = args.data.wind?.speed?.toString()
-        binding.pressureTextView.text = args.data.main?.pressure.toString()
+        drawWeatherData()
     }
 
-    private fun capture() = viewModel.setLoading().let {
-        imageCapture.takePicture(
-            ContextCompat.getMainExecutor(requireContext()),
-            imageCaptureCallbacks
-        )
+    private fun setButtonClicks() = with(binding) {
+        captureImageView.setOnClickListener { capture() }
+        cancelImageView.setOnClickListener { viewModel.cancelPhoto() }
+        saveImageView.setOnClickListener { viewModel.setLoading();savePhoto() }
+    }
+
+    private fun drawWeatherData() = with(binding) {
+        cityNameTextView.text = args.data.name.toString()
+        currentTempTextView.text = args.data.main?.temp.toString()
+        feelsLikeTextView.text = args.data.main?.feelsLike.toString()
+        humidityTextView.text = args.data.main?.humidity.toString()
+        windTextView.text = args.data.wind?.speed?.toString()
+        pressureTextView.text = args.data.main?.pressure.toString()
+    }
+
+    private fun capture() {
+        viewModel.setLoading()
+        imageCapture.takePicture(ContextCompat.getMainExecutor(requireContext()),imageCaptureCallbacks)
     }
 
     private fun startCamera() {
@@ -88,7 +90,6 @@ class CameraFragment : Fragment() {
                 .bindToLifecycle(viewLifecycleOwner, cameraSelector.build(), preview, imageCapture)
         }, ContextCompat.getMainExecutor(requireContext()))
     }
-
 
     private fun savePhoto() = CoroutineScope(viewModel.cameraJob + Dispatchers.Main).launch {
         val uri = requireContext().saveCapturedPhoto(binding.frameLayout)
