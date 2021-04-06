@@ -20,7 +20,7 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Timer().schedule(object : TimerTask() {
             override fun run() {
-                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+               if (isAdded) findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
             }
         }, 2000)
     }
