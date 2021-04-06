@@ -8,10 +8,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.andrew.photoweatherapp.databinding.FragmentShareBinding
+import com.andrew.photoweatherapp.presentation.FACEBOOK_PACKAGE
+import com.andrew.photoweatherapp.presentation.TWITTER_PACKAGE
+import com.andrew.photoweatherapp.presentation.shareImage
 
 class ShareFragment : Fragment() {
     private val path by lazy { ShareFragmentArgs.fromBundle(requireArguments()).uri }
+
     private lateinit var binding: FragmentShareBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,11 +27,19 @@ class ShareFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        drawFullPhoto()
+        binding.facebookShareButton.setOnClickListener { shareImage(FACEBOOK_PACKAGE) }
+        binding.twitterShareButton.setOnClickListener { shareImage(TWITTER_PACKAGE) }
+    }
+
+    private fun shareImage(packageId: String) = shareImage(requireContext(), path, packageId)
+
+    private fun drawFullPhoto() = with(binding.fullPhotoImageView) {
         if (path.isBlank()) {
-            binding.fullPhotoImageView.scaleType = ImageView.ScaleType.CENTER
-            binding.fullPhotoImageView.setImageResource(R.drawable.ic_picture)
+            scaleType = ImageView.ScaleType.CENTER
+            setImageResource(R.drawable.ic_picture)
         } else {
-            binding.fullPhotoImageView.setImageURI(Uri.parse(path))
+            setImageURI(Uri.parse(path))
         }
     }
 

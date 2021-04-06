@@ -19,4 +19,7 @@
     <string name="humidity">Humidity:</string>
     <string name="wind">Wind:</string>
     <string name="pick_current_weather_then_capture_a_photo">pick current weather then capture a photo</string>
+    <string name="photo" />
+    <string name="share_to_facebook">share to facebook</string>
+    <string name="share_to_twitter">share to twitter</string>
 </resources>
