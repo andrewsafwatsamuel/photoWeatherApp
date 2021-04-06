@@ -1,9 +1,10 @@
 photoWeatherApp
 
-project architecture: clean architecture
-project uses: AndroidxCamera, kotlin coroutines, retrofit \
-the app is responsive for screen orientation changes and does't lose curren state as well \
-unit tests are written for GetWeatherDataUseCase
+. Project architecture: clean architecture\
+. Project uses: AndroidxCamera, kotlin coroutines, retrofit \
+. The app is responsive for screen orientation changes and does't lose curren state as well \
+. Unit tests are written for GetWeatherDataUseCase\
+. At some places in the app there are place  holders that do not hinder or change app functionality
 
 screens: SplashScreen, HomeScreen, CameraScreen, HistoryScreen and ShareScreen
    1. splash screen: first screen that redirects to home screen
